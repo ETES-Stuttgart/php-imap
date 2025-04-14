@@ -1,9 +1,9 @@
 <?php
 /*
-* File: Issue401Test.php
+* File: Issue572Test.php
 * Category: Test
-* Author: M.Goldenbaum
-* Created: 23.06.23 22:48
+* Author: ETES
+* Created: 14.04.2025
 * Updated: -
 *
 * Description:
