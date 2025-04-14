@@ -1,0 +1,17 @@
+Return-Path: <test@example.net>
+Content-Type: multipart/related;
+	boundary="_634c13df-7dd6-4dba-a18b-f4da6e4aa3dd_"
+MIME-Version: 1.0
+Content-Transfer-Encoding: 7bit
+Subject: Job #184 failed
+From: test@example.net
+To: support@etes.de
+Date: Wed, 22 Jan 2025 18:08:13 -0000
+Message-ID: <133756929343.1201.7118972727319558135@test.example.net>
+
+--_634c13df-7dd6-4dba-a18b-f4da6e4aa3dd_
+Content-Transfer-Encoding: base64
+Content-Type: text/html
+
+c29tZSBzcGVjaWFsIGNoYXJzOiDimb/DpMO8w7Y=
+--_634c13df-7dd6-4dba-a18b-f4da6e4aa3dd_
