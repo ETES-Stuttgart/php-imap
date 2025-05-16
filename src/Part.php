@@ -292,7 +292,7 @@ class Part {
         $valid_disposition = in_array(strtolower($this->disposition ?? ''), $this->config->get('options.dispositions'));
 
         if ($this->type == IMAP::MESSAGE_TYPE_TEXT && ($this->ifdisposition == 0 || empty($this->disposition) || !$valid_disposition)) {
-            if (($this->subtype == null || in_array((strtolower($this->subtype)), ["plain", "html"])) && $this->filename == null && $this->name == null) {
+            if (($this->subtype == null || in_array((strtolower($this->subtype)), ["plain", "html", "related"])) && $this->filename == null && $this->name == null) {
                 return false;
             }
         }

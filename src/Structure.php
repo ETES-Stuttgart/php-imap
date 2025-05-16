@@ -102,7 +102,7 @@ class Structure {
      * @return Part[]
      * @throws InvalidMessageDateException
      */
-    private function parsePart(string $context, int $part_number = 0): array {
+    private function parsePart(string $context, int $part_number = 0, array &$final_parts = []): array {
         $body = $context;
         while (($pos = strpos($body, "\r\n")) > 0) {
             $body = substr($body, $pos + 2);
@@ -113,7 +113,7 @@ class Structure {
         $config = $this->header->getConfig();
         $headers = new Header($headers, $config);
         if (($boundary = $headers->getBoundary()) !== null) {
-            $parts = $this->detectParts($boundary, $body, $part_number);
+            $parts = $this->detectParts($boundary, $body, $part_number, $final_parts);
 
             if(count($parts) > 1) {
                 return $parts;
@@ -131,16 +131,15 @@ class Structure {
      * @return array
      * @throws InvalidMessageDateException
      */
-    private function detectParts(string $boundary, string $context, int $part_number = 0): array {
+    private function detectParts(string $boundary, string $context, int $part_number = 0, array &$final_parts = []): array {
         $base_parts = explode( "--".$boundary, $context);
         if(count($base_parts) == 0) {
             $base_parts = explode($boundary, $context);
         }
-        $final_parts = [];
         foreach($base_parts as $ctx) {
             $ctx = substr($ctx, 2);
             if ($ctx !== "--" && $ctx != "" && $ctx != "\r\n") {
-                $parts = $this->parsePart($ctx, $part_number);
+                $parts = $this->parsePart($ctx, $part_number, $final_parts);
                 foreach ($parts as $part) {
                     $final_parts[] = $part;
                     $part_number = $part->part_number;
