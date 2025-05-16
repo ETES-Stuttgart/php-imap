@@ -135,14 +135,10 @@ class ImapProtocol extends Protocol {
      * @throws RuntimeException
      */
     public function nextLine(Response $response): string {
-        $line = "";
-        while (($next_char = fread($this->stream, 1)) !== false && !in_array($next_char, ["", "\n"])) {
-            $line .= $next_char;
-        }
-        if ($line === "" && ($next_char === false || $next_char === "")) {
+        $line = fgets($this->stream);
+        if ($line === false || $line === '') {
             throw new RuntimeException('empty response');
         }
-        $line .= "\n";
         $response->addResponse($line);
         if ($this->debug) echo "<< " . $line;
         return $line;
@@ -770,6 +766,7 @@ class ImapProtocol extends Protocol {
         if (is_array($from) && count($from) > 1) {
             $set = implode(',', $from);
         } elseif (is_array($from) && count($from) === 1) {
+            $from = array_values($from);
             $set = $from[0] . ':' . $from[0];
         } elseif ($to === null) {
             $set = $from . ':' . $from;
@@ -939,7 +936,7 @@ class ImapProtocol extends Protocol {
         $uids = $this->uid_cache;
 
         if ($id == null) {
-            return Response::empty($this->debug)->setResult($uids);
+            return Response::empty($this->debug)->setResult($uids)->setCanBeEmpty(true);
         }
 
         foreach ($uids as $k => $v) {
